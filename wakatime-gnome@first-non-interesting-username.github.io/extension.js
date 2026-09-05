@@ -81,7 +81,7 @@ const Indicator = GObject.registerClass(
 export default class IndicatorExampleExtension extends Extension {
   enable() {
     this._indicator = new Indicator();
-    Main.panel.addToStatusArea(this.uuid, this._indicator);
+    Main.panel.addToStatusArea(this.uuid, this._indicator, 0, 'right');
     this._timer = GLib.timeout_add_seconds(GLib.PRIORITY_DEFAULT, 30, () => {
       this._indicator?.refresh();
       return GLib.SOURCE_CONTINUE;

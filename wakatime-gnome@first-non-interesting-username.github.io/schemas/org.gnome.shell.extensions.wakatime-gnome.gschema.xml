@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <schema id="org.gnome.shell.extensions.wakatime-gnome"
+          path="/org/gnome/shell/extensions/wakatime-gnome/">
+    <key name="position" type="i">
+        <default>2</default>
+        <summary>Position on the bar</summary>
+        <description>Determines position on the gnome bar, 0 is left, 1 is center, 2 is right.</description>
+    </key>
+    <key name="base-url" type="s">
+      <default>''</default>
+      <summary>Base URL</summary>
+      <description>WakaTime base url used for statusbar request. Value from `~/.wakatime.cfg` used by default.</description>
+    </key>
+    <key name="api-key" type="s">
+      <default>''</default>
+      <summary>API key</summary>
+      <description>WakaTime API key used for statusbar request. Value from `~/.wakatime.cfg` used by default.</description>
+    </key>
+    <key name="refresh-interval" type="i">
+      <default>30</default>
+      <summary>Refresh interval</summary>
+      <description>Polling interval in seconds.</description>
+    </key>
+  </schema>
+</schemalist>
