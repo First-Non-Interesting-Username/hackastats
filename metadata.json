@@ -1,0 +1,8 @@
+{
+  "name": "Wakatime Gnome",
+  "description": "Display daily wakatime stats in the top bar",
+  "uuid": "wakatime-gnome@first-non-interesting-username.github.io",
+  "shell-version": [
+    "50"
+  ]
+}
