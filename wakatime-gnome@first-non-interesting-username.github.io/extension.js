@@ -21,6 +21,8 @@ import St from "gi://St";
 import Clutter from "gi://Clutter";
 import Soup from "gi://Soup?version=3.0";
 import GLib from "gi://GLib";
+import Gio from 'gi://Gio';
+
 
 import {
   Extension,
@@ -32,12 +34,11 @@ import * as PopupMenu from "resource:///org/gnome/shell/ui/popupMenu.js";
 import * as Main from "resource:///org/gnome/shell/ui/main.js";
 
 const session = new Soup.Session();
-const api_key = "";
 
-async function getToday() {
+async function getToday(baseUrl, apiKey) {
   const message = Soup.Message.new(
     "GET",
-    `https://hackatime.hackclub.com/api/hackatime/v1/users/my/statusbar/today?api_key=${api_key}`,
+    `${baseUrl}/users/my/statusbar/today?api_key=${apiKey}`,
   );
 
   const bytes = await session.send_and_read_async(
@@ -54,21 +55,46 @@ async function getToday() {
   return json.data.grand_total.text;
 }
 
+function getPosition(positionInt) {
+  if (positionInt === 0) {
+    return {
+      position: 'left',
+      index: -1
+    }
+  } else if (positionInt === 1) {
+    return {
+      position: 'center',
+      index: 0
+    }
+  } else if (positionInt === 2) {
+    return {
+      position: 'right',
+      index: 0
+    }
+  }
+
+}
+
 const Indicator = GObject.registerClass(
   class Indicator extends PanelMenu.Button {
-    _init() {
+    _init(settings) {
       super._init(0.0, _("Wakatime gnome indicator"));
+
+      this._settings = settings;
       this._label = new St.Label({
         text: "Loading...",
         x_align: Clutter.ActorAlign.CENTER,
         y_align: Clutter.ActorAlign.CENTER,
       });
+
       this.add_child(this._label);
       this.refresh();
     }
     async refresh() {
       try {
-        const text = await getToday();
+        const baseUrl = this._settings.get_string('base-url');
+        const apiKey = this._settings.get_string('api-key');
+        const text = await getToday(baseUrl, apiKey);
         this._label.set_text(text);
       } catch (e) {
         console.error(this.uuid, e);
@@ -80,9 +106,24 @@ const Indicator = GObject.registerClass(
 
 export default class IndicatorExampleExtension extends Extension {
   enable() {
-    this._indicator = new Indicator();
-    Main.panel.addToStatusArea(this.uuid, this._indicator, 0, 'right');
-    this._timer = GLib.timeout_add_seconds(GLib.PRIORITY_DEFAULT, 30, () => {
+    this._settings = this.getSettings();
+
+    this._handlerIds = [
+       this._settings.connect('changed::api-key', () => this._indicator?.refresh()),
+       this._settings.connect('changed::base-url', () => this._indicator?.refresh()),
+       this._settings.connect('changed::refresh-interval', () => this._restartTimer()),
+       this._settings.connect('changed::position', () => this._reposition()),
+     ];
+
+    this._indicator = new Indicator(this._settings);
+
+    const positionInt = this._settings.get_int('position');
+    const { position, index } = getPosition(positionInt);
+
+    const interval = this._settings.get_int('refresh-interval');
+
+    Main.panel.addToStatusArea(this.uuid, this._indicator, index, position);
+    this._timer = GLib.timeout_add_seconds(GLib.PRIORITY_DEFAULT, interval, () => {
       this._indicator?.refresh();
       return GLib.SOURCE_CONTINUE;
     });
@@ -96,6 +137,10 @@ export default class IndicatorExampleExtension extends Extension {
 
     this._indicator.destroy();
     this._indicator = null;
+    for (const id of this._handlerIds)
+      this._settings.disconnect(id);
+    this._handlerIds = [];
+    this._settings = null;
     session.abort();
   }
 }

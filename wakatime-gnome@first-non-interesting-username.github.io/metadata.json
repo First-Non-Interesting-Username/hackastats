@@ -5,5 +5,4 @@
   "shell-version": ["50"],
   "url": "https://github.com/first-non-interesting-username/wakatime-gnome",
   "settings-schema": "org.gnome.shell.extensions.wakatime-gnome"
-
 }
