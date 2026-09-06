@@ -8,7 +8,7 @@
         <description>Determines position on the gnome bar, 0 is left, 1 is center, 2 is right.</description>
     </key>
     <key name="base-url" type="s">
-      <default>''</default>
+      <default>'https://api.wakatime.com/api/v1'</default>
       <summary>Base URL</summary>
       <description>WakaTime base url used for statusbar request. Value from `~/.wakatime.cfg` used by default.</description>
     </key>

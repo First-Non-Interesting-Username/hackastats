@@ -21,8 +21,7 @@ import St from "gi://St";
 import Clutter from "gi://Clutter";
 import Soup from "gi://Soup?version=3.0";
 import GLib from "gi://GLib";
-import Gio from 'gi://Gio';
-
+import Gio from "gi://Gio";
 
 import {
   Extension,
@@ -58,21 +57,29 @@ async function getToday(baseUrl, apiKey) {
 function getPosition(positionInt) {
   if (positionInt === 0) {
     return {
-      position: 'left',
-      index: -1
-    }
+      position: "left",
+      index: -1,
+    };
   } else if (positionInt === 1) {
     return {
-      position: 'center',
-      index: 0
-    }
+      position: "center",
+      index: 0,
+    };
   } else if (positionInt === 2) {
     return {
-      position: 'right',
-      index: 0
-    }
+      position: "right",
+      index: 0,
+    };
   }
+}
 
+function hasKey(keyFile, group, key) {
+  try {
+    keyFile.get_value(group, key);
+    return true;
+  } catch (e) {
+    return false;
+  }
 }
 
 const Indicator = GObject.registerClass(
@@ -92,8 +99,31 @@ const Indicator = GObject.registerClass(
     }
     async refresh() {
       try {
-        const baseUrl = this._settings.get_string('base-url');
-        const apiKey = this._settings.get_string('api-key');
+        const home = GLib.get_home_dir();
+        const configFile = new GLib.KeyFile();
+        const filePath = `${home}/.wakatime.cfg`;
+
+        let haveFile = true;
+        try {
+          configFile.load_from_file(filePath, GLib.KeyFileFlags.NONE);
+        } catch (e) {
+          haveFile = false;
+        }
+
+        let apiKey, baseUrl;
+
+        if (haveFile && hasKey(configFile, "settings", "api_key")) {
+          apiKey = configFile.get_string("settings", "api_key");
+        } else {
+          apiKey = this._settings.get_string("api-key");
+        }
+
+        if (haveFile && hasKey(configFile, "settings", "api_url")) {
+          baseUrl = configFile.get_string("settings", "api_url");
+        } else {
+          baseUrl = this._settings.get_string("base-url");
+        }
+
         const text = await getToday(baseUrl, apiKey);
         this._label.set_text(text);
       } catch (e) {
@@ -109,24 +139,34 @@ export default class IndicatorExampleExtension extends Extension {
     this._settings = this.getSettings();
 
     this._handlerIds = [
-       this._settings.connect('changed::api-key', () => this._indicator?.refresh()),
-       this._settings.connect('changed::base-url', () => this._indicator?.refresh()),
-       this._settings.connect('changed::refresh-interval', () => this._restartTimer()),
-       this._settings.connect('changed::position', () => this._reposition()),
-     ];
+      this._settings.connect("changed::api-key", () =>
+        this._indicator?.refresh(),
+      ),
+      this._settings.connect("changed::base-url", () =>
+        this._indicator?.refresh(),
+      ),
+      this._settings.connect("changed::refresh-interval", () =>
+        this._restartTimer(),
+      ),
+      this._settings.connect("changed::position", () => this._reposition()),
+    ];
 
     this._indicator = new Indicator(this._settings);
 
-    const positionInt = this._settings.get_int('position');
+    const positionInt = this._settings.get_int("position");
     const { position, index } = getPosition(positionInt);
 
-    const interval = this._settings.get_int('refresh-interval');
+    const interval = this._settings.get_int("refresh-interval");
 
     Main.panel.addToStatusArea(this.uuid, this._indicator, index, position);
-    this._timer = GLib.timeout_add_seconds(GLib.PRIORITY_DEFAULT, interval, () => {
-      this._indicator?.refresh();
-      return GLib.SOURCE_CONTINUE;
-    });
+    this._timer = GLib.timeout_add_seconds(
+      GLib.PRIORITY_DEFAULT,
+      interval,
+      () => {
+        this._indicator?.refresh();
+        return GLib.SOURCE_CONTINUE;
+      },
+    );
   }
 
   disable() {
@@ -137,8 +177,7 @@ export default class IndicatorExampleExtension extends Extension {
 
     this._indicator.destroy();
     this._indicator = null;
-    for (const id of this._handlerIds)
-      this._settings.disconnect(id);
+    for (const id of this._handlerIds) this._settings.disconnect(id);
     this._handlerIds = [];
     this._settings = null;
     session.abort();
