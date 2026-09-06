@@ -56,7 +56,7 @@ async function getToday(baseUrl, apiKey) {
   return json.data.grand_total.text;
 }
 
-// Postion on the top bar
+// Postion on the panel
 function getPosition(positionInt) {
   if (positionInt === 0) {
     return {
@@ -70,13 +70,11 @@ function getPosition(positionInt) {
       position: "center",
       index: 0,
     };
-  } else if (positionInt === 2) {
-    return {
-      // Leftmost on the right side
-      position: "right",
-      index: 0,
-    };
   }
+  return {
+    position: "right",
+    index: 0,
+  };
 }
 
 // Check if the file has some key
@@ -173,10 +171,17 @@ export default class IndicatorExampleExtension extends Extension {
 
   // Add the indicator to the panel
   _reposition() {
-    if (!this._indicator || !this._settings) return;
-    this._indicator.get_parent()?.remove_child(this._indicator);
+    if (!this._settings) return;
 
+    // Destroy the indicator if it exists
+    if (this._indicator) {
+      this._indicator.destroy();
+      this._indicator = null;
+    }
+
+    // Create the indicator
     const { position, index } = getPosition(this._settings.get_int("position"));
+    this._indicator = new Indicator(this._settings);
     Main.panel.addToStatusArea(this.uuid, this._indicator, index, position);
   }
 
@@ -196,8 +201,6 @@ export default class IndicatorExampleExtension extends Extension {
       ),
       this._settings.connect("changed::position", () => this._reposition()),
     ];
-
-    this._indicator = new Indicator(this._settings);
 
     this._reposition();
 

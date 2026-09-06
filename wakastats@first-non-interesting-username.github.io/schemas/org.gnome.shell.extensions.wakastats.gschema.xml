@@ -4,8 +4,8 @@
           path="/org/gnome/shell/extensions/wakastats/">
     <key name="position" type="i">
         <default>2</default>
-        <summary>Position on the bar</summary>
-        <description>Determines position on the gnome bar, 0 is left, 1 is center, 2 is right.</description>
+        <summary>Position on the panel</summary>
+        <description>Determines position on the GNOME panel, 0 is left, 1 is center, 2 is right.</description>
     </key>
     <key name="base-url" type="s">
       <default>'https://api.wakatime.com/api/v1'</default>
