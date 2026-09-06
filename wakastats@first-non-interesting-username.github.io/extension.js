@@ -92,7 +92,7 @@ function hasKey(keyFile, group, key) {
 const Indicator = GObject.registerClass(
   class Indicator extends PanelMenu.Button {
     _init(settings) {
-      super._init(0.0, _("Wakatime gnome indicator"));
+      super._init(0.0, _("Wakastats indicator"));
 
       this._settings = settings;
       this._label = new St.Label({
@@ -152,17 +152,23 @@ const Indicator = GObject.registerClass(
 );
 
 export default class IndicatorExampleExtension extends Extension {
-
   // Restart (or enable) the timer that refreshes the data
   _restartTimer() {
-    if (this._timer) { GLib.source_remove(this._timer); this._timer = null; }
+    if (this._timer) {
+      GLib.source_remove(this._timer);
+      this._timer = null;
+    }
     if (!this._settings || !this._indicator) return;
 
     const interval = this._settings.get_int("refresh-interval");
-    this._timer = GLib.timeout_add_seconds(GLib.PRIORITY_DEFAULT, interval, () => {
-      this._indicator?.refresh();
-      return GLib.SOURCE_CONTINUE;
-    });
+    this._timer = GLib.timeout_add_seconds(
+      GLib.PRIORITY_DEFAULT,
+      interval,
+      () => {
+        this._indicator?.refresh();
+        return GLib.SOURCE_CONTINUE;
+      },
+    );
   }
 
   // Add the indicator to the panel
@@ -170,10 +176,9 @@ export default class IndicatorExampleExtension extends Extension {
     if (!this._indicator || !this._settings) return;
     this._indicator.get_parent()?.remove_child(this._indicator);
 
-    const {position, index} = getPosition(this._settings.get_int("position"));
+    const { position, index } = getPosition(this._settings.get_int("position"));
     Main.panel.addToStatusArea(this.uuid, this._indicator, index, position);
   }
-
 
   enable() {
     this._settings = this.getSettings();
@@ -194,9 +199,9 @@ export default class IndicatorExampleExtension extends Extension {
 
     this._indicator = new Indicator(this._settings);
 
-    this._reposition()
+    this._reposition();
 
-    this._restartTimer()
+    this._restartTimer();
   }
 
   disable() {

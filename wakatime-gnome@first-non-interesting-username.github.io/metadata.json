@@ -1,8 +1,0 @@
-{
-  "name": "Wakatime Gnome",
-  "description": "Display daily wakatime stats in the top bar",
-  "uuid": "wakatime-gnome@first-non-interesting-username.github.io",
-  "shell-version": ["50"],
-  "url": "https://github.com/first-non-interesting-username/wakatime-gnome",
-  "settings-schema": "org.gnome.shell.extensions.wakatime-gnome"
-}

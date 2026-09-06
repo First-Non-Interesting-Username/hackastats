@@ -1,0 +1,8 @@
+{
+  "name": "Wakastats",
+  "description": "Display daily wakatime stats in the GNOME top bar",
+  "uuid": "wakastats@first-non-interesting-username.github.io",
+  "shell-version": ["50"],
+  "url": "https://github.com/first-non-interesting-username/wakastats",
+  "settings-schema": "org.gnome.shell.extensions.wakastats"
+}
