@@ -61,7 +61,7 @@ export default class MyExtensionPreferences extends ExtensionPreferences {
         });
 
         const misc = new Adw.PreferencesGroup({
-            title: _('Miscellaneous'),
+            title: _('Misc'),
         });
         page.add(misc);
 
