@@ -1,6 +1,6 @@
 # wakastats
 
-A simple gnome shell extension displaying wakatime data
+A GNOME
 
 ## Disclaimer
 
