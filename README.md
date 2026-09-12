@@ -45,3 +45,8 @@ The developement setup is explained in [CONTRIBUTING.md](/CONTRIBUTING.md)
 ## Disclaimer
 
 This project is not affiliated with [Wakatime](https://wakatime.com/) in any way
+
+## License
+
+This project is licensed under the GNU General Public License v2.0 or later (SPDX: `GPL-2.0-or-later`).
+See [LICENSE](/LICENSE) for the full text.
