@@ -16,6 +16,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
+import Gio from "gi://Gio";
 import GObject from "gi://GObject";
 import St from "gi://St";
 import Clutter from "gi://Clutter";
@@ -30,9 +31,7 @@ import * as PanelMenu from "resource:///org/gnome/shell/ui/panelMenu.js";
 
 import * as Main from "resource:///org/gnome/shell/ui/main.js";
 
-const session = new Soup.Session();
-
-async function getToday(baseUrl, apiKey) {
+async function getToday(session, baseUrl, apiKey, cancellable) {
   // Create a request
   const message = Soup.Message.new(
     "GET",
@@ -42,7 +41,7 @@ async function getToday(baseUrl, apiKey) {
   const bytes = await session.send_and_read_async(
     message,
     GLib.PRIORITY_DEFAULT,
-    null,
+    cancellable,
   );
 
   // Error on non ok http response codes
@@ -89,10 +88,12 @@ function hasKey(keyFile, group, key) {
 
 const Indicator = GObject.registerClass(
   class Indicator extends PanelMenu.Button {
-    _init(settings) {
+    _init(settings, session) {
       super._init(0.0, _("Wakastats indicator"));
 
       this._settings = settings;
+      this._session = session;
+      this._cancellable = new Gio.Cancellable();
       this._label = new St.Label({
         // Displayed before first fetch
         text: "Loading...",
@@ -106,6 +107,10 @@ const Indicator = GObject.registerClass(
     }
     // Refresh panel
     async refresh() {
+      this._cancellable?.cancel();
+      this._cancellable = new Gio.Cancellable();
+      const cancellable = this._cancellable;
+
       try {
         // Get ~/.wakatime.cfg
         const home = GLib.get_home_dir();
@@ -137,23 +142,43 @@ const Indicator = GObject.registerClass(
         }
 
         // Get today stats
-        const text = await getToday(baseUrl, apiKey);
-        this._label.set_text(text);
+        const text = await getToday(
+          this._session,
+          baseUrl,
+          apiKey,
+          cancellable,
+        );
+        if (cancellable.is_cancelled()) return;
+        this._label?.set_text(text);
       } catch (e) {
-        console.error(this.uuid, e);
+        if (
+          cancellable.is_cancelled() ||
+          e.matches(Gio.IOErrorEnum, Gio.IOErrorEnum.CANCELLED)
+        )
+          return;
+        console.error("Wakastats", e);
         // Display that message when there's no connection to the server or api key/base url is declared in a wrong way
         // Might be unhelpful
-        this._label.set_text("Server unavailable");
+        this._label?.set_text("Server unavailable");
       }
+    }
+
+    destroy() {
+      this._cancellable?.cancel();
+      this._cancellable = null;
+      this._session = null;
+      this._settings = null;
+      this._label = null;
+      super.destroy();
     }
   },
 );
 
-export default class IndicatorExampleExtension extends Extension {
+export default class WakastatsExtension extends Extension {
   // Restart (or enable) the timer that refreshes the data
   _restartTimer() {
     if (this._timer) {
-      GLib.source_remove(this._timer);
+      GLib.Source.remove(this._timer);
       this._timer = null;
     }
     if (!this._settings || !this._indicator) return;
@@ -171,7 +196,7 @@ export default class IndicatorExampleExtension extends Extension {
 
   // Add the indicator to the panel
   _reposition() {
-    if (!this._settings) return;
+    if (!this._settings || !this._session) return;
 
     // Destroy the indicator if it exists
     if (this._indicator) {
@@ -181,11 +206,13 @@ export default class IndicatorExampleExtension extends Extension {
 
     // Create the indicator
     const { position, index } = getPosition(this._settings.get_int("position"));
-    this._indicator = new Indicator(this._settings);
+    this._indicator = new Indicator(this._settings, this._session);
     Main.panel.addToStatusArea(this.uuid, this._indicator, index, position);
   }
 
   enable() {
+    this._session = new Soup.Session();
+
     this._settings = this.getSettings();
 
     // Refresh things when dconf is changed
@@ -210,16 +237,19 @@ export default class IndicatorExampleExtension extends Extension {
   disable() {
     // Delete the timer
     if (this._timer) {
-      GLib.source_remove(this._timer);
+      GLib.Source.remove(this._timer);
       this._timer = null;
     }
 
-    this._indicator.destroy();
+    this._indicator?.destroy();
     this._indicator = null;
     // Close the process that refreshes things in reaction to dconf changes
-    for (const id of this._handlerIds) this._settings.disconnect(id);
-    this._handlerIds = [];
+    if (this._settings && this._handlerIds) {
+      for (const id of this._handlerIds) this._settings.disconnect(id);
+    }
+    this._handlerIds = null;
     this._settings = null;
-    session.abort();
+    this._session?.abort();
+    this._session = null;
   }
 }
