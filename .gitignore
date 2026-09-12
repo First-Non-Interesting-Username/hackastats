@@ -12,3 +12,6 @@ devenv.local.yaml
 # GNOME Shell extension build artifacts
 hackastats@first-non-interesting-username.github.io/schemas/gschemas.compiled
 *.compiled
+
+# zipped extension
+hackastats@first-non-interesting-username.github.io.shell-extension.zip

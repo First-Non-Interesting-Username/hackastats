@@ -10,8 +10,9 @@ Devenv adds the following wrappers to your path:
 
 - `run-gnome` - runs nested GNOME session for debugging.
 - `link-extension` - adds a link from local source to the place GNOME expects extensions to be.
-- `unlink-extension` - reverts `link-extension`
-- `compile-schemas` - recompiles schema for dconf (required for local testing)
+- `unlink-extension` - reverts `link-extension`.
+- `compile-schemas` - recompiles schema for dconf (required for local testing).
+- `package-extension` - create .zip file ready to submit to EGO.
 
 ## Contributing guidelines
 
