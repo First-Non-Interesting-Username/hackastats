@@ -2,7 +2,11 @@
 
 ![Image of GNOME shell with wakastats extension enabled](wakastats.png)
 
-A simple GNOME shell extension displaying wakatime today data
+A simple GNOME shell extension displaying today data for [hackatime](https://github.com/hackclub/hackatime) compatible coding time trackers.
+
+> [!IMPORTANT]
+> The only officially supported server is [official hackatime instance](https://hackatime.hackclub.com/).
+> If your server doesn't work, feel free to submit a PR adding compatibility with it.
 
 ## Installations
 
@@ -25,6 +29,12 @@ All settings live under `/org/gnome/shell/extensions/wakastats` path. Here are t
 - `/org/gnome/shell/extensions/wakastats/base-url` - the base API URL for your wakatime server. Overwritten by `~/.wakatime.cfg`.
 - `/org/gnome/shell/extensions/wakastats/base-url` - position on the GNOME panel, 0 is left, 1 is center and 2 is right. Defaults to 2 (on the right).
 - `/org/gnome/shell/extensions/wakastats/refresh-interval` - how often should the data refresh, in seconds. Defaults to 30.
+
+## Usage
+
+Configure base url and api key (in dconf or by setting them in `~/.wakatime.cfg`).
+If the displayed text says `Server unavailable`, the extension cannot access the server.
+This usually means that you don't have network access or your base url is wrong.
 
 ## Developement setup
 
