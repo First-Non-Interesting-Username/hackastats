@@ -35,7 +35,7 @@ async function getToday(session, baseUrl, apiKey, cancellable) {
   // Create a request
   const message = Soup.Message.new(
     "GET",
-    `${baseUrl}/users/my/statusbar/today?api_key=${apiKey}`,
+    `${baseUrl}/users/current/statusbar/today?api_key=${apiKey}`,
   );
 
   const bytes = await session.send_and_read_async(
