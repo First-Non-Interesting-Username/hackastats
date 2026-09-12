@@ -8,22 +8,22 @@
   (at your option) any later version.
 -->
 <schemalist>
-  <schema id="org.gnome.shell.extensions.wakastats"
-          path="/org/gnome/shell/extensions/wakastats/">
+  <schema id="org.gnome.shell.extensions.hackastats"
+          path="/org/gnome/shell/extensions/hackastats/">
     <key name="position" type="i">
         <default>2</default>
         <summary>Position on the panel</summary>
         <description>Determines position on the GNOME panel, 0 is left, 1 is center, 2 is right.</description>
     </key>
     <key name="base-url" type="s">
-      <default>'https://api.wakatime.com/api/v1'</default>
+      <default>'https://hackatime.hackclub.com/api/hackatime/v1'</default>
       <summary>Base URL</summary>
-      <description>WakaTime base url used for statusbar request. Value from `~/.wakatime.cfg` used by default.</description>
+      <description>Hackatime base url used for statusbar request. Value from `~/.wakatime.cfg` used by default.</description>
     </key>
     <key name="api-key" type="s">
       <default>''</default>
       <summary>API key</summary>
-      <description>WakaTime API key used for statusbar request. Value from `~/.wakatime.cfg` used by default.</description>
+      <description>Hackatime API key used for statusbar request. Value from `~/.wakatime.cfg` used by default.</description>
     </key>
     <key name="refresh-interval" type="i">
       <default>30</default>

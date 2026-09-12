@@ -10,5 +10,5 @@ devenv.local.yaml
 .pre-commit-config.yaml
 
 # GNOME Shell extension build artifacts
-wakastats@first-non-interesting-username.github.io/schemas/gschemas.compiled
+hackastats@first-non-interesting-username.github.io/schemas/gschemas.compiled
 *.compiled

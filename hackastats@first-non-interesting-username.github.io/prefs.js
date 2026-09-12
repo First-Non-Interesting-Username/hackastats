@@ -28,7 +28,7 @@ export default class MyExtensionPreferences extends ExtensionPreferences {
   fillPreferencesWindow(window) {
     const settings = this.getSettings();
 
-    window.set_default_size(660, 720);
+    window.set_default_size(600, 450);
     window.set_search_enabled(true);
 
     const page = new Adw.PreferencesPage({
@@ -37,23 +37,23 @@ export default class MyExtensionPreferences extends ExtensionPreferences {
     });
     window.add(page);
 
-    const wakatime = new Adw.PreferencesGroup({
-      title: _("Wakatime"),
+    const hackatime = new Adw.PreferencesGroup({
+      title: _("Hackatime"),
       description: _(
-        "Settings related to wakatime connection. Overwritten by `~/.wakatime.cfg`.",
+        "Settings related to hackatime connection. Overwritten by `~/.wakatime.cfg`.",
       ),
     });
-    page.add(wakatime);
+    page.add(hackatime);
 
     const apiKey = new Adw.EntryRow({
-      title: _("Wakatime API key"),
+      title: _("Hackatime API key"),
     });
-    wakatime.add(apiKey);
+    hackatime.add(apiKey);
 
     const baseUrl = new Adw.EntryRow({
-      title: _("Wakatime base URL"),
+      title: _("Hackatime base URL"),
     });
-    wakatime.add(baseUrl);
+    hackatime.add(baseUrl);
 
     apiKey.set_text(settings.get_string("api-key"));
     apiKey.connect("notify::text", () => {

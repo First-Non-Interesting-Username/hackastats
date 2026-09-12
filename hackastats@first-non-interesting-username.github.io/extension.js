@@ -89,7 +89,7 @@ function hasKey(keyFile, group, key) {
 const Indicator = GObject.registerClass(
   class Indicator extends PanelMenu.Button {
     _init(settings, session) {
-      super._init(0.0, _("Wakastats indicator"));
+      super._init(0.0, _("Hackastats indicator"));
 
       this._settings = settings;
       this._session = session;
@@ -153,10 +153,11 @@ const Indicator = GObject.registerClass(
       } catch (e) {
         if (
           cancellable.is_cancelled() ||
-          e.matches(Gio.IOErrorEnum, Gio.IOErrorEnum.CANCELLED)
+          (e instanceof GLib.Error &&
+            e.matches(Gio.IOErrorEnum, Gio.IOErrorEnum.CANCELLED))
         )
           return;
-        console.error("Wakastats", e);
+        console.error("Hackastats", e);
         // Display that message when there's no connection to the server or api key/base url is declared in a wrong way
         // Might be unhelpful
         this._label?.set_text("Server unavailable");
@@ -174,7 +175,7 @@ const Indicator = GObject.registerClass(
   },
 );
 
-export default class WakastatsExtension extends Extension {
+export default class HackastatsExtension extends Extension {
   // Restart (or enable) the timer that refreshes the data
   _restartTimer() {
     if (this._timer) {

@@ -11,13 +11,13 @@
     # Link the extension for developement
     "link-extension".exec = ''
       ln -sfn \
-        "$PWD/wakastats@first-non-interesting-username.github.io" \
-        "$HOME/.local/share/gnome-shell/extensions/wakastats@first-non-interesting-username.github.io"
+        "$PWD/hackastats@first-non-interesting-username.github.io" \
+        "$HOME/.local/share/gnome-shell/extensions/hackastats@first-non-interesting-username.github.io"
     '';
     # Revert linking
-    "unlink-extension".exec = "rm ~/.local/share/gnome-shell/extensions/wakastats@first-non-interesting-username.github.io";
+    "unlink-extension".exec = "rm ~/.local/share/gnome-shell/extensions/hackastats@first-non-interesting-username.github.io";
     # Compile schemas
-    "compile-schemas".exec = "glib-compile-schemas wakastats@first-non-interesting-username.github.io/schemas/";
+    "compile-schemas".exec = "glib-compile-schemas hackastats@first-non-interesting-username.github.io/schemas/";
   };
   packages = with pkgs; [
     glib
