@@ -49,7 +49,7 @@ gnome-extensions enable hackastats@first-non-interesting-username.github.io
 
 You can also enable it with the _Extensions_ or _Extension Manager_ app.
 
-4. Restart GNOME Shell to apply, log out and log back in.
+4. Log out and log back in to apply changes.
 
 #### From source
 
@@ -75,9 +75,7 @@ gnome-extensions enable hackastats@first-non-interesting-username.github.io
 
 You can also enable it with the _Extensions_ or _Extension Manager_ app.
 
-4. Restart GNOME Shell to apply:
-   - On Wayland: log out and log back in.
-   - On X11: press `Alt` + `F2`, type `r`, and press `Enter`.
+4. Log out and log back in to apply changes.
 
 ## Configuration
 
