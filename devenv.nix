@@ -20,9 +20,9 @@
     "compile-schemas".exec = "glib-compile-schemas hackastats@first-non-interesting-username.github.io/schemas/";
     # Package the extension to the format expected in
     "package-extension".exec = ''
-      rm hackastats@first-non-interesting-username.github.io.shell-extension.zip &&
-      rm hackastats@first-non-interesting-username.github.io/gschemas.compiled &&
-      gnome-extensions pack --force --out-dir $PWD
+      rm -f hackastats@first-non-interesting-username.github.io.shell-extension.zip &&
+      rm -f hackastats@first-non-interesting-username.github.io/gschemas.compiled &&
+      gnome-extensions pack --force --out-dir $PWD hackastats@first-non-interesting-username.github.io
     '';
   };
   packages = with pkgs; [

@@ -8,16 +8,76 @@ A simple GNOME shell extension displaying today data for [hackatime](https://git
 > The only officially supported server is [official hackatime instance](https://hackatime.hackclub.com/).
 > If your server doesn't work, feel free to submit a PR adding compatibility with it.
 
-## Installations
+## Installation
 
-This extension supports only GNOME 50+
-Check your GNOME version with
+This extension supports only GNOME 50+.
+Check your GNOME version with:
 
 ```bash
 gnome-shell --version
 ```
 
-<!-- I'm waiting for this extension to be approved on https://extensions.gnome.org/ -->
+### From extensions.gnome.org (EGO) — recommended
+
+> [!NOTE]
+> This extension has been submitted to [extensions.gnome.org](https://extensions.gnome.org/) and is currently waiting for approval.
+> Once approved, it will be installable from there. Until then, use the [standalone installation](#standalone) below.
+
+Once approved:
+
+1. Open the [Hackastats page on EGO](https://extensions.gnome.org/extension/10942/hackastats/) (or search for `Hackastats` on <https://extensions.gnome.org/>).
+2. Flip the switch to `ON` and confirm the installation.
+3. Alternatively, in the [Extension Manager](https://github.com/mjakeman/extension-manager) app, search for `Hackastats` under _Browse_ and click _Install_.
+
+### Standalone
+
+#### From a release bundle
+
+1. Download the `hackastats@first-non-interesting-username.github.io.shell-extension.zip` file from the [Releases page](https://github.com/First-Non-Interesting-Username/hackastats/releases).
+
+2. Install it:
+
+```bash
+gnome-extensions install --force hackastats@first-non-interesting-username.github.io.shell-extension.zip
+```
+
+3. Enable the extension:
+
+```bash
+gnome-extensions enable hackastats@first-non-interesting-username.github.io
+```
+
+You can also enable it with the _Extensions_ or _Extension Manager_ app.
+
+4. Restart GNOME Shell to apply, log out and log back in.
+
+#### From source
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/First-Non-Interesting-Username/hackastats.git
+```
+
+2. Copy the extension to your local extensions directory and compile the schemas:
+
+```bash
+mkdir -p ~/.local/share/gnome-shell/extensions
+cp -r hackastats/hackastats@first-non-interesting-username.github.io ~/.local/share/gnome-shell/extensions/
+glib-compile-schemas ~/.local/share/gnome-shell/extensions/hackastats@first-non-interesting-username.github.io/schemas/
+```
+
+3. Enable the extension:
+
+```bash
+gnome-extensions enable hackastats@first-non-interesting-username.github.io
+```
+
+You can also enable it with the _Extensions_ or _Extension Manager_ app.
+
+4. Restart GNOME Shell to apply:
+   - On Wayland: log out and log back in.
+   - On X11: press `Alt` + `F2`, type `r`, and press `Enter`.
 
 ## Configuration
 
