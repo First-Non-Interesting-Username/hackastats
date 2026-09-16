@@ -79,7 +79,7 @@ You can also enable it with the _Extensions_ or _Extension Manager_ app.
 
 ## Configuration
 
-You can configure this extension using dconf. Preferences page is also available, but it's self explantory (duh, no it's not).
+You can configure this extension using dconf. Preferences page is also available, but it's self explanatory (duh, no it's not).
 
 All settings live under `/org/gnome/shell/extensions/hackastats` path. Here are the keys:
 
@@ -94,9 +94,9 @@ Configure base url and api key (in dconf or by setting them in `~/.wakatime.cfg`
 If the displayed text says `Server unavailable`, the extension cannot access the server.
 This usually means that you don't have network access or your base url is wrong.
 
-## Developement setup
+## Development setup
 
-The developement setup is explained in [CONTRIBUTING.md](/CONTRIBUTING.md)
+The development setup is explained in [CONTRIBUTING.md](/CONTRIBUTING.md)
 
 (tldr: use devenv)
 

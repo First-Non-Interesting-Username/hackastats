@@ -40,7 +40,7 @@ export default class MyExtensionPreferences extends ExtensionPreferences {
     const hackatime = new Adw.PreferencesGroup({
       title: _("Hackatime"),
       description: _(
-        "Settings related to hackatime connection. Overwritten by `~/.wakatime.cfg`.",
+        "Settings related to hackatime connection. Base URL and API key are overwritten by `~/.wakatime.cfg`.",
       ),
     });
     page.add(hackatime);
