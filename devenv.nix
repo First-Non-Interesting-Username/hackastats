@@ -8,7 +8,7 @@
   scripts = {
     # Run nested GNOME session
     "run-gnome".exec = "dbus-run-session -- gnome-shell --devkit";
-    # Link the extension for developement
+    # Link the extension for development
     "link-extension".exec = ''
       ln -sfn \
         "$PWD/hackastats@first-non-interesting-username.github.io" \

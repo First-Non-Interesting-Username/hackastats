@@ -55,7 +55,7 @@ async function getToday(session, baseUrl, apiKey, cancellable) {
   return json.data.grand_total.text;
 }
 
-// Postion on the panel
+// Position on the panel
 function getPosition(positionInt) {
   if (positionInt === 0) {
     return {
@@ -134,7 +134,7 @@ const Indicator = GObject.registerClass(
           apiKey = this._settings.get_string("api-key");
         }
 
-        // Asign base url
+        // Assign base url
         if (haveFile && hasKey(configFile, "settings", "api_url")) {
           baseUrl = configFile.get_string("settings", "api_url");
         } else {
