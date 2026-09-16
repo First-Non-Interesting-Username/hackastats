@@ -111,6 +111,8 @@ const Indicator = GObject.registerClass(
       this._cancellable = new Gio.Cancellable();
       const cancellable = this._cancellable;
 
+      let apiKey, baseUrl;
+
       try {
         // Get ~/.wakatime.cfg
         const home = GLib.get_home_dir();
@@ -124,8 +126,6 @@ const Indicator = GObject.registerClass(
         } catch (e) {
           haveFile = false;
         }
-
-        let apiKey, baseUrl;
 
         // Assign api key
         if (haveFile && hasKey(configFile, "settings", "api_key")) {
@@ -158,9 +158,14 @@ const Indicator = GObject.registerClass(
         )
           return;
         console.error("Hackastats", e);
-        // Display that message when there's no connection to the server or api key/base url is declared in a wrong way
-        // Might be unhelpful
-        this._label?.set_text("Server unavailable");
+        if (apiKey == "") {
+          // Display that message when API key isn't configured
+          this._label?.set_text("No API key");
+        } else {
+          // Display that message when there's no connection to the server or api key/base url is declared in a wrong way
+          // Might be unhelpful
+          this._label?.set_text("Server unavailable");
+        }
       }
     }
 
