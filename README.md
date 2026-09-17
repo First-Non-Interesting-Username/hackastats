@@ -10,7 +10,7 @@ A simple GNOME shell extension displaying today data for [hackatime](https://git
 
 ## Installation
 
-This extension supports only GNOME 50+.
+This extension supports only GNOME 45+.
 Check your GNOME version with:
 
 ```bash
