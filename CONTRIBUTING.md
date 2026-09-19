@@ -24,8 +24,8 @@ Devenv adds the following wrappers to your path:
 Test workflow (standard commands in brackets):
 
 - Make your changes
-- `compile-schemas` (`glib-compile-schemas hackastats@first-non-interesting-username.github.io/schemas/`), compile dconf schema.
-- `link-extension` (`ln -sfn $PWD/hackastats@first-non-interesting-username.github.io $HOME/.local/share/gnome-shell/extensions/hackastats@first-non-interesting-username.github.io`), link the extension to where GNOME expects it.
+- `compile-schemas` (`glib-compile-schemas hackastats@first-uninteresting-username.github.io/schemas/`), compile dconf schema.
+- `link-extension` (`ln -sfn $PWD/hackastats@first-uninteresting-username.github.io $HOME/.local/share/gnome-shell/extensions/hackastats@first-uninteresting-username.github.io`), link the extension to where GNOME expects it.
 - `run-gnome` (`dbus-run-session -- gnome-shell --devkit`), run nested session of GNOME.
 - Test the extension manually, especially newly introduced changes.
-- `unlink-extension` (`rm ~/.local/share/gnome-shell/extensions/hackastats@first-non-interesting-username.github.io`), remove the link.
+- `unlink-extension` (`rm ~/.local/share/gnome-shell/extensions/hackastats@first-uninteresting-username.github.io`), remove the link.

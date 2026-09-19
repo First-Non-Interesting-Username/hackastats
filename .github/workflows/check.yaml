@@ -23,7 +23,7 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y libglib2.0-bin
 
       - name: Compile Schemas
-        run: glib-compile-schemas hackastats@first-non-interesting-username.github.io/schemas/
+        run: glib-compile-schemas hackastats@first-uninteresting-username.github.io/schemas/
 
       - name: Run prettier
         run: npx --yes prettier --check .

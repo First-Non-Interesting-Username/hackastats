@@ -27,7 +27,7 @@ jobs:
       - name: Pack extension
         run: |
           mkdir -p dist
-          gnome-extensions pack --force --out-dir dist hackastats@first-non-interesting-username.github.io
+          gnome-extensions pack --force --out-dir dist hackastats@first-uninteresting-username.github.io
           ls -lh dist
 
       - name: Create release
@@ -41,6 +41,6 @@ jobs:
             Installation instruction:
 
             1. Download the zip file from the assets
-            2. Run `gnome-extensions install --force hackastats@first-non-interesting-username.github.io.shell-extension.zip` to install the extension
-            3. Enable the extension in the GNOME Extensions app or run `gnome-extensions enable hackastats@first-non-interesting-username.github.io`
+            2. Run `gnome-extensions install --force hackastats@first-uninteresting-username.github.io.shell-extension.zip` to install the extension
+            3. Enable the extension in the GNOME Extensions app or run `gnome-extensions enable hackastats@first-uninteresting-username.github.io`
             4. Restart GNOME Shell by logging out and back in.

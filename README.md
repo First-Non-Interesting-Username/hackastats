@@ -33,18 +33,18 @@ Once approved:
 
 #### From a release bundle
 
-1. Download the `hackastats@first-non-interesting-username.github.io.shell-extension.zip` file from the [Releases page](https://github.com/First-Non-Interesting-Username/hackastats/releases).
+1. Download the `hackastats@first-uninteresting-username.github.io.shell-extension.zip` file from the [Releases page](https://github.com/first-uninteresting-username/hackastats/releases).
 
 2. Install it:
 
 ```bash
-gnome-extensions install --force hackastats@first-non-interesting-username.github.io.shell-extension.zip
+gnome-extensions install --force hackastats@first-uninteresting-username.github.io.shell-extension.zip
 ```
 
 3. Enable the extension:
 
 ```bash
-gnome-extensions enable hackastats@first-non-interesting-username.github.io
+gnome-extensions enable hackastats@first-uninteresting-username.github.io
 ```
 
 You can also enable it with the _Extensions_ or _Extension Manager_ app.
@@ -56,21 +56,21 @@ You can also enable it with the _Extensions_ or _Extension Manager_ app.
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/First-Non-Interesting-Username/hackastats.git
+git clone https://github.com/first-uninteresting-username/hackastats.git
 ```
 
 2. Copy the extension to your local extensions directory and compile the schemas:
 
 ```bash
 mkdir -p ~/.local/share/gnome-shell/extensions
-cp -r hackastats/hackastats@first-non-interesting-username.github.io ~/.local/share/gnome-shell/extensions/
-glib-compile-schemas ~/.local/share/gnome-shell/extensions/hackastats@first-non-interesting-username.github.io/schemas/
+cp -r hackastats/hackastats@first-uninteresting-username.github.io ~/.local/share/gnome-shell/extensions/
+glib-compile-schemas ~/.local/share/gnome-shell/extensions/hackastats@first-uninteresting-username.github.io/schemas/
 ```
 
 3. Enable the extension:
 
 ```bash
-gnome-extensions enable hackastats@first-non-interesting-username.github.io
+gnome-extensions enable hackastats@first-uninteresting-username.github.io
 ```
 
 You can also enable it with the _Extensions_ or _Extension Manager_ app.
